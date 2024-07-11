@@ -1,0 +1,167 @@
+.header {
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+}
+
+.nav_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+  img {
+    height: 80px;
+    margin-bottom: 5px;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #000;
+  }
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  column-gap: 2.7rem;
+}
+
+.nav_item a {
+  font-weight: 300;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.nav_item:hover {
+  transform: scale(1.2);
+  transition: transform ease-in-out 0.3s;
+}
+
+.nav_icons {
+  display: flex;
+  align-items: center;
+  column-gap: 1.2rem;
+  justify-content: center;
+}
+
+.nav_icons span i {
+  font-size: 1.3rem;
+}
+
+.badge {
+  position: absolute;
+  top: 30%;
+  right: -30%;
+  height: 13px;
+  width: 13px;
+  content: "";
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.nav_icons span img {
+  width: 30px;
+  height: 30px;
+}
+
+.mobile_menu {
+  font-size: 1.3rem;
+  color: black;
+  display: none;
+}
+
+.nav_active {
+  font-weight: 700 !important;
+  transition: all ease-in-out 0.4s;
+}
+
+.cart_icon,
+.fav_icon {
+  position: relative;
+}
+
+.sticky_header {
+  width: 100%;
+  height: 70px;
+  line-height: 70px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+  box-shadow: 3px 3px 8px -3px #ddd;
+}
+
+@media only screen and (max-width: 768px) {
+  .navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.53);
+    z-index: 1000;
+    display: none;
+  }
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100%;
+    background: #fff;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .active_menu {
+    display: block;
+  }
+
+  .mobile_menu {
+    display: block;
+
+    span {
+      i {
+        font-size: 1.1rem !important;
+      }
+    }
+  }
+
+  .logo {
+    img {
+      width: 2rem;
+      height: 3rem;
+    }
+    h4 {
+      font-size: 0.9rem;
+    }
+  }
+
+  .nav_icons > span > img {
+    width: 1.4rem;
+    height: 1.4rem;
+  }
+
+  .header {
+    width: 100%;
+    height: 60px;
+  }
+}
