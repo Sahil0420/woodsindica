@@ -3,11 +3,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-import "../../styles/product-card.css";
+import "./style.css"; // Since `style.css` is in the same folder as `index.jsx`
 import { Col } from "reactstrap";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../../redux/slices/cartSlice";
+import { cartActions } from "../../../redux/slices/cartSlice"; // Adjusted path for Redux slice
+
 
 const ProductCard = ({ item }) => {
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Helmet from "../components/Helmet";
-import image from "../assets/images/forest.jpg";
+import Helmet from "../../components/Helmet";
+import image from "../../assets/images/forest.jpg";
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import "../styles/signup.css";
+import "./style.css";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage, db } from "../firebase.config"; // Import db
+import { auth, storage, db } from "../../firebase.config"; // Import db
 import { setDoc, doc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";

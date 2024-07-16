@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Helmet from "../components/Helmet";
-import CommonSection from "../components/UI/CommonSection";
-import "../styles/productDetails.css";
+import Helmet from "../../components/Helmet";
+import CommonSection from "../../components/UI/CommonSection";
+import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../redux/slices/cartSlice";
+import { cartActions } from "../../redux/slices/cartSlice";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { db } from "../firebase.config";
+import { db } from "../../firebase.config";
 import { doc, getDoc } from "firebase/firestore";
-import useGetData from "../customHooks/useGetData";
+import useGetData from "../../customHooks/useGetData";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);

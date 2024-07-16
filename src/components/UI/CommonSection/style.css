@@ -1,6 +1,6 @@
 .common_section {
   background: linear-gradient(rgba(0, 0, 0, 0.531), rgba(0, 0, 0, 0.545)),
-    url("../assets/images/tree-rings.svg") no-repeat center center;
+    url("../../../assets/images/tree-rings.svg") no-repeat center center;
   background-size: cover;
   height: 300px;
 

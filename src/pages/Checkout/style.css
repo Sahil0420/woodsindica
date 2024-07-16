@@ -3,7 +3,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  background: url("../assets/images/forest.jpg");
+  background: url("../../assets/images/forest.jpg");
   background-size: contain;
   padding:0 3rem;
 }

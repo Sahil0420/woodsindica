@@ -1,10 +1,9 @@
 import React from "react";
 import { Row } from "reactstrap";
-
-import useAuth from "../customHooks/useAuth";
-import "./styles/adminNav.css";
+import useAuth from "../../customHooks/useAuth";
+import "./style.css";
 import { Link } from "react-router-dom";
-import { Navigate } from "react-router-dom";
+
 
 const admin_nav = [
   {

@@ -1,9 +1,9 @@
 import React from "react";
-import Helmet from "../components/Helmet";
+import Helmet from "../../components/Helmet";
 import {Container, Row , Col} from 'reactstrap'
-import './styles/dashboard.css'
+import './style.css'
 
-import useGetData from '../customHooks/useGetData';
+import useGetData from '../../customHooks/useGetData';
 
 
 const Dashboard = () => {

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "../styles/login.css";
-import Helmet from "../components/Helmet";
+import "./style.css";
+import Helmet from "../../components/Helmet";
 import { Link, useNavigate } from "react-router-dom";
-import image from "../assets/images/forest.jpg";
+import image from "../../assets/images/forest.jpg";
 import { motion } from "framer-motion";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase.config";
+import { auth } from "../../firebase.config";
 import toast from "react-hot-toast";
 
 const Login = () => {

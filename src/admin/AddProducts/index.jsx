@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "reactstrap";
-import "./styles/addproducts.css";
+import "./style.css";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { db, storage } from "../firebase.config"; // Import storage
+import { db, storage } from "../../firebase.config"; // Import storage
 import { addDoc, collection } from "firebase/firestore";
 import toast from "react-hot-toast";
 

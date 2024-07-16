@@ -1,13 +1,13 @@
-.login_form{
+.signup_form {
   height: 90rem;
-  background-image: url('../assets/images/forest.jpg');
+  background-image: url("../../assets/images/forest.jpg");
   display: flex;
   align-items: center;
   justify-content: center;
-  background-size:contain;
+  background-size: contain;
 }
 
-#login-form {
+#signup-form {
   height: 640px;
   width: 400px;
   background-color: rgba(255, 255, 255, 0.13);
@@ -22,14 +22,14 @@
   padding: 50px 35px;
 }
 
-#login-form * {
+#signup-form * {
   font-family: "Poppins", sans-serif;
   letter-spacing: 0.5px;
   outline: none;
   border: none;
 }
 
-#login-form h3{
+#signup-form h3 {
   color: rgb(222, 211, 211);
   font-size: 32px;
   font-weight: 500;
@@ -44,6 +44,7 @@ label {
   font-size: 16px;
   font-weight: 500;
 }
+
 input {
   display: block;
   height: 50px;
@@ -60,15 +61,15 @@ input {
   color: #e5e5e5;
 }
 
-#password{
+#password {
   padding-right: 3rem;
 }
 
-.eye_button{
+.eye_button {
   position: relative;
   color: white;
-  top:-35px;
-  left:300px;
+  top: -35px;
+  left: 300px;
 }
 
 button {
@@ -83,7 +84,7 @@ button {
   cursor: pointer;
 }
 
-.redirect_section{
+.redirect_section {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -92,43 +93,51 @@ button {
   font-weight: 500;
 }
 
-@media only screen and (max-width : 576px){
+#userImage {
+  input {
+    background: none;
+    height: 100%;
+    justify-content: center;
+    font-size: 1rem;
+  }
+}
 
+@media only screen and (max-width: 576px) {
   .login_form {
     height: 50rem;
   }
-  
-  .login_form>form{
+
+  .login_form > form {
     height: 500px;
     width: 300px;
     top: 32rem;
-    input,label{
+    input,
+    label {
       font-size: 0.7rem;
       font-weight: 300;
     }
 
-    input{
+    input {
       height: 35px;
     }
 
-    button{
-      margin:10px 0;
+    button {
+      margin: 10px 0;
       font-size: 1rem;
       padding: 10px;
     }
   }
 
-  .eye_button{
+  .eye_button {
     top: -30px;
     left: 200px;
-  } 
+  }
 
-  .redirect_section{
-    p{
-      font-size:0.8rem;
+  .redirect_section {
+    p {
+      font-size: 0.8rem;
     }
     font-weight: 300;
     font-size: 0.8rem;
   }
-
 }

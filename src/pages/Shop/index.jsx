@@ -1,13 +1,11 @@
 // Shop.jsx
 import React, { useState, useEffect } from "react";
-import { db } from "../firebase.config";
-import { collection, getDocs } from "firebase/firestore";
-import CommonSection from "../components/UI/CommonSection";
-import Helmet from "../components/Helmet";
+import CommonSection from "../../components/UI/CommonSection";
+import Helmet from "../../components/Helmet";
 import { Container, Row } from "reactstrap";
-import "../styles/shop.css";
-import ProductList from "../components/UI/ProductList";
-import useGetData from "../customHooks/useGetData"; 
+import "./style.css";
+import ProductList from '../../components/UI/ProductList'
+import useGetData from "../../customHooks/useGetData"; 
 
 const Shop = () => {
   const [productsData, setProductsData] = useState([]);
@@ -80,7 +78,7 @@ const Shop = () => {
                 <option value="htl">High To Low</option>
               </select>
             </div>
-            <div className="search_box">
+            <div className="shop_search_box">
               <input
                 type="text"
                 placeholder="search. . . . . ."

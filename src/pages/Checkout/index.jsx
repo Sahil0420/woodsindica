@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Helmet from "../components/Helmet";
-import "../styles/checkout.css";
+import Helmet from "../../components/Helmet";
+import "./style.css";
 import { useSelector } from "react-redux";
 import { collection, addDoc } from "firebase/firestore";
-import { db } from "../firebase.config";
+import { db } from "../../firebase.config";
 import toast from "react-hot-toast";
 
 const Checkout = () => {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { db , storage } from "../firebase.config";
+import { db , storage } from "../../firebase.config";
 import { doc, deleteDoc ,getDoc } from "firebase/firestore";
-import useGetData from "../customHooks/useGetData";
+import useGetData from "../../customHooks/useGetData";
 import { ref ,deleteObject } from "firebase/storage";
 
-import "./styles/allproducts.css";
+import "./style.css";
 
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";

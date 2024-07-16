@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Helmet from "../components/Helmet";
+import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import Services from "../services/Services";
-import products from "../assets/data/product";
+import Services from "../../services/Services";
 import { motion } from "framer-motion";
 
-import heroimg from "../assets/images/wood.jpg";
-import ProductList from "../components/UI/ProductList";
+import heroimg from "../../assets/images/wood.jpg";
+import useGetData from '../../customHooks/useGetData'
 
-import useGetData from "../customHooks/useGetData";
-
-import "../styles/home.css";
+import "./style.css";
 
 const Home = () => {
   const { data: products, loading } = useGetData("products");

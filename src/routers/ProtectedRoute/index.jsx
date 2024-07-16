@@ -1,5 +1,5 @@
 import React from 'react';
-import useAuth from '../customHooks/useAuth';
+import useAuth from '../../customHooks/useAuth';
 import { Navigate, Outlet } from 'react-router-dom';
 
 
