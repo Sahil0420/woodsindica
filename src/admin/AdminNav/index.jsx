@@ -1,9 +1,6 @@
 import React from "react";
-import { Row } from "reactstrap";
-import useAuth from "../../customHooks/useAuth";
-import "./style.css";
 import { Link } from "react-router-dom";
-
+import useAuth from "../../customHooks/useAuth";
 
 const admin_nav = [
   {
@@ -27,46 +24,51 @@ const admin_nav = [
 const AdminNav = () => {
   const { currentUser } = useAuth();
 
-  
-
   return (
-    <>
-      <header className="admin_header">
-        <div className="admin_nav_top">
-          <div className="admin_nav_wrapper_top">
-            <h2>WoodsIndica</h2>
-          </div>
-          <div className="search_box">
-            <input type="text" name="" placeholder="Search..." id="" />
-            <span>
-              <i className="ri-search-line"></i>
-            </span>
-          </div>
-          <div className="admin_nav_top_right">
-            <span>
+    <div className="flex h-screen bg-gray-100">
+      {/* Sidebar */}
+      <div className="hidden md:flex flex-col w-64 bg-gray-800 rounded-2xl">
+        <div className="flex flex-col flex-1 overflow-y-auto">
+          <nav className="flex flex-col flex-1 overflow-y-auto bg-gradient-to-b from-gray-700 to-blue-500 px-2 py-4 gap-10 rounded-2xl">
+            <div>
+              <h2 className="text-xl font-bold text-black px-4 py-2">WoodsIndica</h2>
+            </div>
+            <div className="flex flex-col flex-1 gap-3">
+              {admin_nav.map((item, index) => (
+                <Link
+                  key={index}
+                  to={item.path}
+                  className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-400 hover:bg-opacity-25 rounded-2xl"
+                >
+                  {item.display}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="flex flex-col flex-1 overflow-y-auto">
+        <div className="flex items-center justify-end h-16 bg-white border-b border-gray-200">
+          {/* Notification and Settings */}
+          <div className="flex items-center space-x-4 mr-4">
+            <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-300">
               <i className="ri-notification-3-line"></i>
-            </span>
-            <span>
-              <i className="ri-settings-2-line"></i>                                
-            </span>
-            <img src={currentUser.photoURL} alt="userimg" />
+            </a>
+            <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-300">
+              <i className="ri-settings-2-line"></i>
+            </a>
+            <img src={currentUser.photoURL} alt="userimg" className="h-8 w-8 rounded-full" />
           </div>
         </div>
-      </header>
-      <section className="admin_menu p-0 m-0">
-        <Row>
-          <div className="admin_navigation">
-            <ul className="admin_menu_list">
-              {admin_nav.map((item, index) => (
-                <li className="admin_menu_item" id={index}>
-                  <Link to={item.path} className={navClass => navClass.isActive ? 'active_admin_menu' : ''} >{item.display}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </Row>
-      </section>
-    </>
+
+        {/* Content area */}
+        <div className="p-4">
+          {/* Your main content goes here */}
+        </div>
+      </div>
+    </div>
   );
 };
 

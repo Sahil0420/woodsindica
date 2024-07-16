@@ -24,7 +24,7 @@ const AllProducts = () => {
 
       if (productDoc.exists()) {
         const productData = productDoc.data();
-        const imageUrl = productData.imgURL;
+        const imageUrl = productData.imgUrl;
 
         await deleteDoc(productDocRef);
 
@@ -66,7 +66,7 @@ const AllProducts = () => {
                 productsData.map((item) => (
                   <tr key={item.id} className="allproduct_bar">
                     <td className="allproduct_img">
-                      <img src={item.imgURL} alt="" />
+                      <img src={item.imgUrl} alt="" />
                     </td>
                     <td>{item.productName}</td>
                     <td>{item.category}</td>
