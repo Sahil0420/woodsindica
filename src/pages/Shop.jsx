@@ -1,109 +1,107 @@
-import React, { useState } from "react";
+// Shop.jsx
+import React, { useState, useEffect } from "react";
+import { db } from "../firebase.config";
+import { collection, getDocs } from "firebase/firestore";
 import CommonSection from "../components/UI/CommonSection";
 import Helmet from "../components/Helmet";
-import { Container, Row, Col } from "reactstrap";
+import { Container, Row } from "reactstrap";
 import "../styles/shop.css";
-
-import products from "../assets/data/product";
 import ProductList from "../components/UI/ProductList";
-
-const categories = ["timber", "essential oils", "furniture"];
+import useGetData from "../customHooks/useGetData"; 
 
 const Shop = () => {
-  const [productsData, setProductsData] = useState(products);
+  const [productsData, setProductsData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+
+  // Use the custom hook to fetch data
+  const { data, loading } = useGetData("products"); 
+
+  useEffect(() => {
+    // Set initial data and filter data when it's available
+    if (data) {
+      setProductsData(data);
+      setFilteredData(data);
+    }
+  }, [data]);
 
   const handleFilter = (e) => {
     const filterValue = e.target.value;
-    if (filterValue === "Timber") {
-      const filterProducts = products.filter(
-        (item) => item.category === "Timber"
+    if (filterValue === "all") {
+      setFilteredData(productsData);
+    } else {
+      const filteredProducts = productsData.filter(
+        (item) => item.category === filterValue
       );
-      setProductsData(filterProducts);
-    }
-
-    if (filterValue === "Furniture") {
-      const filterProducts = products.filter(
-        (item) => item.category === "Furniture"
-      );
-      setProductsData(filterProducts);
-    }
-
-    if (filterValue === "Essential Oils") {
-      const filterProducts = products.filter(
-        (item) => item.category === "Essential Oils"
-      );
-      setProductsData(filterProducts);
+      setFilteredData(filteredProducts);
     }
   };
 
   const handleSearch = (e) => {
     const query = e.target.value;
 
-    const searchedProducts = products.filter((item) =>
+    const searchedProducts = productsData.filter((item) =>
       item.productName.toLowerCase().includes(query.toLowerCase())
     );
 
-    setProductsData(searchedProducts);
+    setFilteredData(searchedProducts);
   };
 
-  const sortByPrice = (e) =>{
+  const sortByPrice = (e) => {
     const sortBy = e.target.value;
-    if (sortBy.toLowerCase() === "ascending"){
-      const sortProduct = products.sort((a ,b ) => (a.price - b.price))
+    let sortedProducts = [];
+    if (sortBy.toLowerCase() === "lth") {
+      sortedProducts = [...filteredData].sort((a, b) => a.price - b.price);
     }
 
-    if (sortBy.toLowerCase() === "descending"){
-      const sortProduct = products.sort((a ,b ) => (b.price - a.price))
+    if (sortBy.toLowerCase() === "htl") {
+      sortedProducts = [...filteredData].sort((a, b) => b.price - a.price);
     }
-  }
+    setFilteredData(sortedProducts);
+  };
 
   return (
     <Helmet title="Shop">
       <CommonSection title="Products"></CommonSection>
       <section className="filters">
         <Container>
-          <Row>
-            <Col lg="3" md="3">
-              <div className="filter_widget">
-                <select onChange={handleFilter}>
-                  <option>Filter By Category</option>
-                  <option value="Furniture">Furniture</option>
-                  <option value="Timber">Timber</option>
-                  <option value="Essential Oils">Essential Oils</option>
-                </select>
-              </div>
-            </Col>
-            <Col lg="3" md="3">
-              <div className="filter_widget">
-                <select onChange={sortByPrice}>
-                  <option>Sort By Price</option>
-                  <option value="ascending">Ascending</option>
-                  <option value="descending">Descending</option>
-                </select>
-              </div>
-            </Col>
-            <Col lg="6" md="3">
-              <div className="search_box">
-                <input
-                  type="text"
-                  placeholder="search. . . . . ."
-                  onChange={handleSearch}
-                />
-                <span>
-                  <i className="ri-search-line"></i>
-                </span>
-              </div>
-            </Col>
-          </Row>
+          <div className="filter_area">
+            <div className="filter_widget" id="category">
+              <select onChange={handleFilter}>
+                <option value="all">Filter By Category</option>
+                <option value="Furniture">Furniture</option>
+                <option value="Timber">Timber</option>
+                <option value="Essential Oils">Essential Oils</option>
+              </select>
+            </div>
+            <div className="filter_widget" id="price">
+              <select onChange={sortByPrice}>
+                <option>Sort By Price</option>
+                <option value="lth">Low To High</option>
+                <option value="htl">High To Low</option>
+              </select>
+            </div>
+            <div className="search_box">
+              <input
+                type="text"
+                placeholder="search. . . . . ."
+                onChange={handleSearch}
+              />
+              <span>
+                <i className="ri-search-line"></i>
+              </span>
+            </div>
+          </div>
         </Container>
       </section>
       <section className="gallery">
         <Container>
           <Row>
-            {productsData.length === 0 ? (
+            {loading ? (
+              <h1 className="acknowledge">Loading products...</h1>
+            ) : filteredData.length === 0 ? (
               <h1 className="acknowledge">No products</h1>
             ) : (
-              <ProductList data={productsData}></ProductList>
+              <ProductList data={filteredData}></ProductList>
             )}
           </Row>
         </Container>

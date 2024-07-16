@@ -9,23 +9,18 @@ import { motion } from "framer-motion";
 import heroimg from "../assets/images/wood.jpg";
 import ProductList from "../components/UI/ProductList";
 
+import useGetData from "../customHooks/useGetData";
 
 import "../styles/home.css";
 
 const Home = () => {
+  const { data: products, loading } = useGetData("products");
+
   const [dataTimber, setDataTimber] = useState(products);
-  const [dataOils, setDataOils] = useState(products)
+  const [dataOils, setDataOils] = useState(products);
 
   const year = new Date().getFullYear();
-
-  useEffect(() => {
-    const TimberProduct = products.filter((item) => item.category === "Timber");
-    setDataTimber(TimberProduct);
-    
-    const OilProduct = products.filter((item) => item.category === "Essential Oils");
-    setDataOils(OilProduct);
-  }, []);
-
+  
   return (
     <Helmet title={"Home"}>
       <section className="hero_section">
@@ -44,7 +39,7 @@ const Home = () => {
                   crafted Furniture , designed to blend functionality with
                   contemporary elegance".
                 </p>
-                <motion.button whileTap={{scale:0.9}} className="buy_btn">
+                <motion.button whileTap={{ scale: 0.9 }} className="buy_btn">
                   <Link to={"/shop"}>SHOP NOW</Link>
                 </motion.button>
               </div>
@@ -60,25 +55,8 @@ const Home = () => {
       <section className="services">
         <Services />
       </section>
-      <section className="trending_products">
-        <Container>
-          <Row>
-            <Col lg="12" className="text-center">
-              <h2 className="section_title">Timber Products</h2>
-            </Col>
-            <ProductList data={dataTimber} />
-          </Row>
-        </Container>
-      </section>
-      <section className="trending_products">
-        <Container>
-          <Row>
-            <Col lg="12" className="text-center">
-              <h2 className="section_title">Essential Oils</h2>
-            </Col>
-            <ProductList data={dataOils} />
-          </Row>
-        </Container>
+      <section>
+
       </section>
     </Helmet>
   );

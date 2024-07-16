@@ -1,0 +1,143 @@
+.signup_form {
+  height: 90rem;
+  background-image: url("../assets/images/forest.jpg");
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: contain;
+}
+
+#signup-form {
+  height: 640px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.13);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  backdrop-filter: blur(6px);
+  border: 2px solid rgba(253, 250, 250, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+}
+
+#signup-form * {
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+
+#signup-form h3 {
+  color: rgb(222, 211, 211);
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 30px;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+  color: #ffffff;
+}
+::placeholder {
+  color: #e5e5e5;
+}
+
+#password {
+  padding-right: 3rem;
+}
+
+.eye_button {
+  position: relative;
+  color: white;
+  top: -35px;
+  left: 300px;
+}
+
+button {
+  margin-top: 50px;
+  width: 100%;
+  background-color: #2459d56c;
+  color: white;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.redirect_section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #0a59f7;
+  font-weight: 500;
+}
+
+#userImage {
+  input {
+    background: none;
+    height: 100%;
+    justify-content: center;
+    font-size: 1rem;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .login_form {
+    height: 50rem;
+  }
+
+  .login_form > form {
+    height: 500px;
+    width: 300px;
+    top: 32rem;
+    input,
+    label {
+      font-size: 0.7rem;
+      font-weight: 300;
+    }
+
+    input {
+      height: 35px;
+    }
+
+    button {
+      margin: 10px 0;
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+
+  .eye_button {
+    top: -30px;
+    left: 200px;
+  }
+
+  .redirect_section {
+    p {
+      font-size: 0.8rem;
+    }
+    font-weight: 300;
+    font-size: 0.8rem;
+  }
+}

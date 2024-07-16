@@ -149,7 +149,7 @@ const products = [
     id: "06",
     productName: "Peppermint Oil",
     imgUrl: productImg06,
-    category: "Essential Oil",
+    category: "Essential Oils",
     price: 163,
     shortDesc:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur iure quas illo voluptates labore tempore!",

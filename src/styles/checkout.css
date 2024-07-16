@@ -1,0 +1,135 @@
+.checkout_form {
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: url("../assets/images/forest.jpg");
+  background-size: contain;
+  padding:0 3rem;
+}
+
+.card {
+  width: 60rem;
+  background: white;
+  position: center;
+  align-self: center;
+  border-radius: 1.5rem;
+  top: 20rem;
+  box-shadow: 4px 3px 20px #3535358c;
+  display: flex;
+  flex-direction: row;
+}
+
+.leftside {
+  background-color: #ffffff;
+  width: 35rem;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
+  padding: 1rem 2rem 3rem 3rem;
+}
+
+.product {
+  object-fit: cover;
+  width: 20em;
+  height: 20em;
+  border-radius: 100%;
+}
+
+p{
+  display: block;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin: 0.8rem 0;
+}
+
+.inputbox {
+  color: #030303;
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1.5px solid #ccc;
+  margin-bottom: 1rem;
+  border-radius: 0.3rem;
+  font-family: "Roboto", sans-serif;
+  color: #615a5a;
+  font-size: 1.1rem;
+  font-weight: 500;
+  outline: none;
+}
+
+.error {
+  color: red;
+}
+
+.inputbox::placeholder {
+  color: black;
+}
+
+.rightside {
+  width: 40rem;
+  padding: 10px 40px;
+  display:flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: space-around;
+  border-bottom-right-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  background: #a8ecfb;
+} 
+
+.rightside div{
+  display: flex;
+  height: 40%;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.place_order_button{
+  background:#061b9e;
+  border: solid 1px rgb(0, 0, 0);
+  border-radius: 10px;
+  color: white;
+}
+
+
+.place_order_button:hover{
+  background-color: #000;
+
+  transition: all ease-in-out 0.4s;
+}
+
+@media only screen and (max-width: 576px) {
+
+  .checkout_form {
+    height: 100vh;
+  }
+
+  .card {
+    flex-direction: column;
+    width: auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    top: 2rem;
+
+  }
+
+  .leftside {
+    width: 100%;
+    border-radius: 0;
+
+    .inputbox{
+      font-size: 0.8rem;
+      width: 240px;
+    }
+
+  }
+
+
+  .rightside {
+    width: auto;
+    border-bottom-left-radius: 1.5rem;
+    padding: 0.5rem 3rem 3rem 2rem;
+    border-radius: 0;
+  }
+}

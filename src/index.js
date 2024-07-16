@@ -10,18 +10,20 @@ import { BrowserRouter } from "react-router-dom";
 
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import toast , {Toaster} from 'react-hot-toast';
-
+import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./customHooks/useAuth";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-    <Provider store={store}>
-      <Toaster/>
-      <App />
-    </Provider>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Toaster />
+          <App />
+        </Provider>
+      </BrowserRouter>
+    </AuthProvider>
   </React.StrictMode>
 );
 

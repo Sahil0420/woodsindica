@@ -1,0 +1,135 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.add_product_form {
+  form {
+    height: 50rem;
+    display: grid;
+    grid-template-rows: 100px 400px 100px;
+    grid-template-columns: 350px 350px;
+    place-content: center;
+    text-align: center;
+
+    .add_product_header {
+      grid-row-start: 1;
+      grid-column-start: 1;
+
+      grid-row-end: 2;
+      grid-column-end: 3;
+    }
+  }
+}
+
+.left_side .form_group {
+  display: flex;
+  align-items: center;
+
+  input {
+    border: none;
+    background: #e1e0e0;
+    color: black;
+    border-radius: 10px;
+  }
+  input::placeholder {
+    color: black !important;
+  }
+
+  select {
+    background: #e1e0e0;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    border: none;
+  }
+}
+
+.left_side,
+.right_side {
+  display: flex;
+  width: 350px;
+  box-shadow: 0px 0px 10px rgb(190, 180, 180),
+    inset 0px 0px 10px rgb(190, 180, 180);
+  border-radius: 20px;
+  padding: 10px;
+}
+
+.left_side {
+  grid-row-start: 2;
+  grid-column-start: 1;
+  grid-row-end: 3;
+  grid-column-end: 2;
+  flex-direction: column;
+  row-gap: 1.6rem;
+}
+
+.right_side {
+  border-radius: 20px;
+  justify-content: center;
+  grid-row-start: 2;
+  grid-column-start: 2;
+
+  grid-row-end: 3;
+  grid-column-end: 3;
+  .form_group input {
+    border: none;
+    padding: 12px;
+    background: #e1e0e0;
+    color: black;
+    border-radius: 10px;
+  }
+
+  .form_group img {
+    margin: 20px 0px;
+    height: 70%;
+    width: 100%;
+    object-fit: contain;
+  }
+}
+
+.submit_button {
+  grid-row-start: 3;
+  grid-column-start: 1;
+  grid-row-end: 4;
+  grid-column-end: 3;
+
+  display: flex;
+  justify-content: center;
+
+  button {
+    border-radius: 10px;
+    background: #000000;
+    width: 50%;
+    padding: 0;
+  }
+}
+
+@media only screen and (max-width: 786px) {
+  .add_product_form {
+    display: flex;
+
+    form {
+      height: 100rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .add_product_header{
+      height: 10rem;
+    }
+
+  }
+
+  .left_side , .right_side {
+    width: 300px;
+  }
+  
+  .submit_button{
+    width: 80%;
+    button{
+      padding: 10px;
+    }
+  }
+}
