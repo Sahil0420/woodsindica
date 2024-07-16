@@ -8,7 +8,7 @@ import "./style.css";
 const Shop = () => {
   const [productsData, setProductsData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState("All");
   const [sortOption, setSortOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -29,7 +29,7 @@ const Shop = () => {
     let filtered = [...productsData];
 
     // Category filter
-    if (activeCategory !== "all") {
+    if (activeCategory !== "All") {
       filtered = filtered.filter(item => item.category === activeCategory);
     }
 
@@ -78,7 +78,7 @@ const Shop = () => {
                 <div className="sidebar_section">
                   <h3>Categories</h3>
                   <ul className="category_list">
-                    {["all", "Furniture", "Timber", "Essential Oils"].map((category) => (
+                    {["All", "Furniture", "Timber", "Essential Oils"].map((category) => (
                       <li 
                         key={category} 
                         className={activeCategory === category ? 'active' : ''}
@@ -102,7 +102,7 @@ const Shop = () => {
             <Col lg="9" md="8">
               <div className="shop_products">
                 <div className="products_header">
-                  <h2>{activeCategory === "all" ? "All Products" : activeCategory}</h2>
+                  <h2>{activeCategory === "All" ? "All Products" : activeCategory}</h2>
                   <div className="search_box">
                     <input
                       type="text"

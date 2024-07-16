@@ -31,9 +31,11 @@ const AdminNav = () => {
         <div className="flex flex-col flex-1 overflow-y-auto">
           <nav className="flex flex-col flex-1 overflow-y-auto bg-gradient-to-b from-gray-700 to-blue-500 px-2 py-4 gap-10 rounded-2xl">
             <div>
-              <h2 className="text-xl font-bold text-black px-4 py-2">WoodsIndica</h2>
+              <h2 className="text-xl font-bold text-black px-4 py-2">
+                WoodsIndica
+              </h2>
             </div>
-            <div className="flex flex-col flex-1 gap-3">
+            <div className="flex flex-col justify-center flex-1 gap-3">
               {admin_nav.map((item, index) => (
                 <Link
                   key={index}
@@ -52,21 +54,10 @@ const AdminNav = () => {
       <div className="flex flex-col flex-1 overflow-y-auto">
         <div className="flex items-center justify-end h-16 bg-white border-b border-gray-200">
           {/* Notification and Settings */}
-          <div className="flex items-center space-x-4 mr-4">
-            <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-300">
-              <i className="ri-notification-3-line"></i>
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800 dark:text-gray-200 dark:hover:text-gray-300">
-              <i className="ri-settings-2-line"></i>
-            </a>
-            <img src={currentUser.photoURL} alt="userimg" className="h-8 w-8 rounded-full" />
-          </div>
         </div>
 
         {/* Content area */}
-        <div className="p-4">
-          {/* Your main content goes here */}
-        </div>
+        <div className="p-4">{/* Your main content goes here */}</div>
       </div>
     </div>
   );
