@@ -1,23 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
-import Services from "../../services/Services";
 import { motion } from "framer-motion";
-
-import heroimg from "../../assets/images/wood.jpg";
-import useGetData from '../../customHooks/useGetData'
+import ProductCard from "../../components/UI/ProductCard"; // Adjust the import path as needed
 
 import "./style.css";
 
 const Home = () => {
-  const { data: products, loading } = useGetData("products");
-
-  const [dataTimber, setDataTimber] = useState(products);
-  const [dataOils, setDataOils] = useState(products);
-
   const year = new Date().getFullYear();
   
+  // Sample featured products (replace with actual data)
+  const featuredProducts = [
+    { id: 1, productName: "Premium Oak Timber", imgUrl: "path_to_image", price: 9999, category: "Hardwood" },
+    { id: 2, productName: "Eucalyptus Essential Oil", imgUrl: "path_to_image", price: 2499, category: "Essential Oils" },
+    { id: 3, productName: "Cedarwood Planks", imgUrl: "path_to_image", price: 7999, category: "Softwood" },
+  ];
+
   return (
     <Helmet title={"Home"}>
       <section className="hero_section">
@@ -26,34 +25,33 @@ const Home = () => {
             <Col lg="6" md="12">
               <div className="hero_content">
                 <p className="hero_subtitle">Trending products in {year}</p>
-                <h2>
-                  Transform Your living space with a sleek , mordern and
-                  minimalist design
-                </h2>
+                <h2>Transform Your Living Space with Natural Elegance</h2>
                 <p>
-                  "Elevate your home's aesthetic with{" "}
-                  <strong>WoodsIndica's</strong> premium Timber and expertly
-                  crafted Furniture , designed to blend functionality with
-                  contemporary elegance".
+                  Elevate your home's aesthetic with <strong>WoodsIndica's</strong> premium timber and expertly
+                  crafted furniture. Experience the perfect blend of functionality and contemporary elegance.
                 </p>
                 <motion.button whileTap={{ scale: 0.9 }} className="buy_btn">
-                  <Link to={"/shop"}>SHOP NOW</Link>
+                  <Link to={"/shop"}>Explore Our Collection</Link>
                 </motion.button>
-              </div>
-            </Col>
-            <Col lg="6" md="12">
-              <div className="hero_img">
-                <img src={heroimg} alt="" />
               </div>
             </Col>
           </Row>
         </Container>
       </section>
-      <section className="services">
-        <Services />
-      </section>
-      <section>
-
+      <section className="featured_products">
+        <Container>
+          <h2 className="text-center mb-5">Featured Products</h2>
+          <Row>
+            {featuredProducts.map((item) => (
+              <ProductCard key={item.id} item={item} />
+            ))}
+          </Row>
+          <div className="text-center mt-5">
+            <motion.button whileTap={{ scale: 0.9 }} className="view_more_btn">
+              <Link to="/shop">View All Products</Link>
+            </motion.button>
+          </div>
+        </Container>
       </section>
     </Helmet>
   );
