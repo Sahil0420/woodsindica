@@ -1,14 +1,12 @@
-// ProductCard.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
-import "./style.css";
 import { Col } from "reactstrap";
 import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { cartActions } from "../../../redux/slices/cartSlice"; // Adjusted path for Redux slice
 
+import "./style.css";
 
 const ProductCard = ({ item }) => {
   const dispatch = useDispatch();
@@ -42,7 +40,7 @@ const ProductCard = ({ item }) => {
           </h3>
           <span className="text-center">{item.category}</span>
         </div>
-        <div className="product_card-bottom d-flex align-items-start justify-content-between">
+        <div className="product_card-bottom d-flex align-items-center justify-content-between">
           <span className="price">₹ {item.price}</span>
           <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
             <button className="btn btn-ghost">

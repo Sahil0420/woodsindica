@@ -10,7 +10,7 @@
   background-color: #fff;
   transition: all 0.3s ease;
   width: 300px;
-  height: 400px;
+  height: 450px; /* Adjusted height to accommodate the button */
 }
 
 .product_item:hover {
@@ -34,14 +34,12 @@
 .product_info {
   width: 100%;
   text-align: left;
-  /* margin-top: 1rem; */
 }
 
 .product_info h3 {
   font-size: 1.2rem;
   color: var(--primary-color);
   font-weight: 600;
-  /* margin-bottom: 0.5rem; */
 }
 
 .product_info h3 a {
@@ -65,7 +63,7 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  /* margin-top: 1rem; */
+  margin-top: auto; /* Ensures the button stays at the bottom */
 }
 
 .product_card-bottom .price {
