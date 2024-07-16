@@ -5,9 +5,12 @@ import { useSelector } from "react-redux";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 import toast from "react-hot-toast";
-
+import useAuth from '../../customHooks/useAuth'
 const Checkout = () => {
-  const [email, setEmail] = useState("");
+
+  const {currentUser} = useAuth();
+  const [name , setName ] = useState(currentUser.displayName);
+  const [email, setEmail] = useState(currentUser.email);
   const [phone, setPhone] = useState("");
   const [pin, setPin] = useState("");
   const [street, setStreet] = useState("");
@@ -58,6 +61,7 @@ const Checkout = () => {
     if (valid) {
       try {
         const orderData = {
+          name ,
           email,
           phone,
           pin,
@@ -98,6 +102,8 @@ const Checkout = () => {
                 name="name"
                 placeholder="Customer Name"
                 required
+                value={name}
+                onChange={(e)=>{setName(e.target.value)}}
               />
               <input
                 type="email"
@@ -167,6 +173,7 @@ const Checkout = () => {
               <h4>
                 Total Cost : <span>{totalAmount.toFixed(2)} INR</span>
               </h4>
+
             </div>
           </div>
         </div>

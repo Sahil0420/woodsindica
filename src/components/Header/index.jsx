@@ -111,10 +111,9 @@ const Header = () => {
                 <span className="badge">{totalQuantity}</span>
               </motion.span>
               <div className="profile">
-                <motion.img
+                <motion.i
                   whileTap={{ scale: 1.1 }}
-                  src={currentUser ? currentUser.photoURL : { userIcon }}
-                  alt=""
+                  className="ri-user-line"
                   onClick={toggleProfileAction}
                 />
                 <div

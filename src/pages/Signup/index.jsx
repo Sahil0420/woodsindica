@@ -5,9 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import "./style.css";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, storage, db } from "../../firebase.config"; // Import db
+import { auth, db } from "../../firebase.config"; // Import db
 import { setDoc, doc } from "firebase/firestore";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import toast from "react-hot-toast";
 
 const Signup = () => {
@@ -24,8 +23,6 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
-  const [userImage, setUserImage] = useState(null);
-  const [preview, setPreview] = useState(null);
   const [isLoading, setLoading] = useState(false); // Add loading state
 
   const handleSubmit = async (e) => {
@@ -69,74 +66,22 @@ const Signup = () => {
       const user = userCredentials.user;
       console.log(user);
 
-      // Upload profile image (if selected)
-      let downloadURL = null; 
-      if (userImage) {
-        const imageRef = ref(storage, `user/${user.uid}/profile`);
-        const uploadTask = uploadBytesResumable(imageRef, userImage);
+      await updateProfile(user, {
+        displayName: name,
+      });
+      console.log("Profile updated");
 
-        // Update profile after upload is complete
-        await new Promise((resolve, reject) => {
-          uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-              // Progress update (optional)
-            },
-            (error) => {
-              reject(error); // Reject the promise if there's an error
-              setError("Failed to upload image. Please try again.");
-              setLoading(false);
-            },
-            () => {
-              // Upload successful
-              getDownloadURL(uploadTask.snapshot.ref)
-                .then(async (url) => {
-                  downloadURL = url; 
-                  resolve(); 
-                })
-                .catch((error) => {
-                  reject(error); 
-                  setError("Failed to get download URL. Please try again.");
-                  setLoading(false);
-                });
-            }
-          );
-        });
-
-        await updateProfile(user, {
-          displayName: name,
-          photoURL: downloadURL,
-        });
-        console.log("Profile updated");
-
-        await setDoc(doc(db, "users", user.uid), {
-          displayName: name,
-          email: email,
-          photoURL: downloadURL, 
-        });
-        console.log("User data stored in Firestore");
-      } else {
-        await updateProfile(user, {
-          displayName: name,
-        });
-        console.log("Profile updated");
-
-        // Store user data in Firestore
-        await setDoc(doc(db, "users", user.uid), {
-          displayName: name,
-          email: email,
-          photoURL: null, 
-        });
-        console.log("User data stored in Firestore");
-      }
+      await setDoc(doc(db, "users", user.uid), {
+        displayName: name,
+        email: email,
+      });
+      console.log("User data stored in Firestore");
 
       // Successful signup
       setName("");
       setEmail("");
       setPassword("");
       setConfirmPassword("");
-      setUserImage(null);
-      setPreview(null);
       setError("");
       setLoading(false); 
       navigate("/shop");
@@ -150,24 +95,6 @@ const Signup = () => {
       }
       setLoading(false);
     }
-  };
-
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-
-    if (file && file.size > 500 * 1024) {
-      setError("File size must be less than 500KB");
-      return;
-    }
-
-    setUserImage(file);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
-    };
-
-    reader.readAsDataURL(file);
   };
 
   return (
@@ -236,21 +163,6 @@ const Signup = () => {
               <i className="ri-eye-close-line"></i>
             )}
           </motion.span>
-          <div id="userImage">
-            <input
-              type="file"
-              name="userimage"
-              accept="image/*"
-              onChange={handleImageUpload}
-            />
-          </div>
-          {preview && (
-            <img
-              src={preview}
-              alt=""
-              style={{ width: "200px", marginTop: "10px" }}
-            />
-          )}
           <button type="submit" disabled={isLoading}>
             {isLoading ? "Creating Account..." : "Create an Account"}
           </button>
