@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 const Cart = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
   const totalAmount = useSelector((state) => state.cart.totalAmount);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <Helmet title="Cart">
@@ -31,7 +31,7 @@ const Cart = () => {
           </section>
           <section className="summary">
             <div className="summary_card">
-              <h3>Subtotal : <span>₹ {totalAmount}</span></h3>
+              <h3>Subtotal : <span>₹ {totalAmount.toFixed(2)}</span></h3>
               <p>Taxes and Shipping will be calculated in checkout.</p>
               <div className="buttons">
                 <motion.button whileTap={{ scale: 0.9 }} className="continue_shopping">
@@ -84,7 +84,7 @@ const CartItem = ({ item }) => {
           readOnly
         />
         <button onClick={increaseUnits} className="btn btn-primary">+</button>
-        <p>₹ {item.price}</p> {/* Move ₹ to the left of the price */}
+        <p>₹ {(item.price * item.quantity).toFixed(2) }</p> {/* Move ₹ to the left of the price */}
       </div>
       <motion.div whileHover={{ scale: 1.1 }} className="item_remove">
         <i className="ri-delete-bin-fill" onClick={deleteProduct}></i>

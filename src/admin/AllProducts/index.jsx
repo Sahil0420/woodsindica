@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { db , storage } from "../../firebase.config";
-import { doc, deleteDoc ,getDoc } from "firebase/firestore";
+import { db, storage } from "../../firebase.config";
+import { doc, deleteDoc, getDoc } from "firebase/firestore";
 import useGetData from "../../customHooks/useGetData";
-import { ref ,deleteObject } from "firebase/storage";
+import { ref, deleteObject } from "firebase/storage";
 
 import "./style.css";
 
@@ -47,46 +47,42 @@ const AllProducts = () => {
     <section>
       <div className="allproduct_container">
         <div className="allproduct_column">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loading ? (
-                <h3 style={{ textAlign: "center" }}>
-                  Fetching All Items from the store . . . .{" "}
-                </h3>
-              ) : (
-                productsData.map((item) => (
-                  <tr key={item.id} className="allproduct_bar">
-                    <td className="allproduct_img">
-                      <img src={item.imgUrl} alt="" />
-                    </td>
-                    <td>{item.productName}</td>
-                    <td>{item.category}</td>
-                    <td>{item.price}</td>
-                    <td>
-                      <motion.button
-                        onClick={() => {
-                          deleteProducts(item.id);
-                        }}
-                        whileHover={{ scale: 0.9 }}
-                        className="product_btn"
-                      >
-                        Delete
-                      </motion.button>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+          <div className="info_heading">
+              <p>Image</p>
+              <p>Name</p>
+              <p>Category</p>
+              <p>Price</p>
+              <p>Action</p>
+          </div>
+          <div className="gallery">
+            {loading ? (
+              <h3 style={{ textAlign: "center" }}>
+                Fetching All Items from the store . . . .{" "}
+              </h3>
+            ) : (
+              productsData.map((item) => (
+                <div key={item.id} className="allproduct_bar">
+                  <td className="allproduct_img">
+                    <img src={item.imgUrl} alt="" />
+                  </td>
+                  <td>{item.productName}</td>
+                  <td>{item.category}</td>
+                  <td>{item.price}</td>
+                  <td>
+                    <motion.button
+                      onClick={() => {
+                        deleteProducts(item.id);
+                      }}
+                      whileHover={{ scale: 0.9 }}
+                      className="product_btn"
+                    >
+                      <i className="ri-delete-bin-line"></i>
+                    </motion.button>
+                  </td>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </section>
