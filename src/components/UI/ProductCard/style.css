@@ -9,8 +9,8 @@
   border-radius: 15px;
   background-color: #fff;
   transition: all 0.3s ease;
-  width: 240px;
-  height: 100%;
+  width: 300px;
+  height: 400px;
 }
 
 .product_item:hover {
