@@ -3,6 +3,8 @@ import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import ProductList from '../../components/UI/ProductList'
 import useGetData from "../../customHooks/useGetData"; 
+import RangeSlider from 'react-range-slider-input';
+import 'react-range-slider-input/dist/style.css';
 import "./style.css";
 
 const Shop = () => {
@@ -11,6 +13,9 @@ const Shop = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortOption, setSortOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [viewMode, setViewMode] = useState("grid");
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const { data, loading } = useGetData("products");
 
@@ -18,29 +23,27 @@ const Shop = () => {
     if (data) {
       setProductsData(data);
       setFilteredData(data);
+      const maxPrice = Math.max(...data.map(item => item.price));
+      setPriceRange([0, maxPrice]);
     }
   }, [data]);
 
   useEffect(() => {
     applyFilters();
-  }, [activeCategory, sortOption, searchTerm]);
+  }, [activeCategory, sortOption, searchTerm, priceRange]);
 
   const applyFilters = () => {
     let filtered = [...productsData];
 
-    // Category filter
     if (activeCategory !== "All") {
       filtered = filtered.filter(item => item.category === activeCategory);
     }
 
-    // Search filter
-    if (searchTerm) {
-      filtered = filtered.filter(item => 
-        item.productName.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
+    filtered = filtered.filter(item => 
+      item.productName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      item.price >= priceRange[0] && item.price <= priceRange[1]
+    );
 
-    // Sort
     if (sortOption === "price_asc") {
       filtered.sort((a, b) => a.price - b.price);
     } else if (sortOption === "price_desc") {
@@ -62,6 +65,10 @@ const Shop = () => {
     setSearchTerm(e.target.value);
   };
 
+  const toggleMobileFilter = () => {
+    setIsMobileFilterOpen(!isMobileFilterOpen);
+  };
+
   return (
     <Helmet title="Shop">
       <section className="shop_header">
@@ -71,10 +78,46 @@ const Shop = () => {
         </Container>
       </section>
       <section className="shop_content">
-        <Container>
+        <Container fluid>
           <Row>
+            <Col lg="9" md="8">
+              <div className="shop_products">
+                <div className="products_header">
+                  <h2>{activeCategory === "All" ? "All Products" : activeCategory}</h2>
+                  <div className="product_controls">
+                    <div className="search_box">
+                      <input
+                        type="text"
+                        placeholder="Search products..."
+                        value={searchTerm}
+                        onChange={handleSearch}
+                      />
+                      <i className="ri-search-line"></i>
+                    </div>
+                    <div className="view_toggle">
+                      <button onClick={() => setViewMode("grid")} className={viewMode === "grid" ? "active" : ""}>
+                        <i className="ri-grid-fill"></i>
+                      </button>
+                      <button onClick={() => setViewMode("list")} className={viewMode === "list" ? "active" : ""}>
+                        <i className="ri-list-check"></i>
+                      </button>
+                    </div>
+                    <button className="mobile_filter_toggle" onClick={toggleMobileFilter}>
+                      <i className="ri-filter-3-line"></i> Filters
+                    </button>
+                  </div>
+                </div>
+                {loading ? (
+                  <div className="loader">Loading products...</div>
+                ) : filteredData.length === 0 ? (
+                  <div className="no_products">No products found</div>
+                ) : (
+                  <ProductList data={filteredData} viewMode={viewMode} />
+                )}
+              </div>
+            </Col>
             <Col lg="3" md="4">
-              <div className="shop_sidebar">
+              <div className={`shop_sidebar ${isMobileFilterOpen ? 'mobile_open' : ''}`}>
                 <div className="sidebar_section">
                   <h3>Categories</h3>
                   <ul className="category_list">
@@ -90,6 +133,19 @@ const Shop = () => {
                   </ul>
                 </div>
                 <div className="sidebar_section">
+                  <h3>Price Range</h3>
+                  <RangeSlider
+                    min={0}
+                    max={Math.max(...productsData.map(item => item.price))}
+                    step={10}
+                    value={priceRange}
+                    onInput={setPriceRange}
+                  />
+                  <div className="price_display">
+                    ${priceRange[0]} - ${priceRange[1]}
+                  </div>
+                </div>
+                <div className="sidebar_section">
                   <h3>Sort By</h3>
                   <select onChange={handleSortChange} value={sortOption}>
                     <option value="">Default</option>
@@ -99,33 +155,9 @@ const Shop = () => {
                 </div>
               </div>
             </Col>
-            <Col lg="9" md="8">
-              <div className="shop_products">
-                <div className="products_header">
-                  <h2>{activeCategory === "All" ? "All Products" : activeCategory}</h2>
-                  <div className="search_box">
-                    <input
-                      type="text"
-                      placeholder="Search products..."
-                      value={searchTerm}
-                      onChange={handleSearch}
-                    />
-                    <i className="ri-search-line"></i>
-                  </div>
-                </div>
-                {loading ? (
-                  <div className="loader">Loading products...</div>
-                ) : filteredData.length === 0 ? (
-                  <div className="no_products">No products found</div>
-                ) : (
-                  <ProductList data={filteredData} />
-                )}
-              </div>
-            </Col>
           </Row>
         </Container>
       </section>
-      
     </Helmet>
   );
 };
