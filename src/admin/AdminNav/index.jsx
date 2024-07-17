@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import './style.css'
-import useAuth from "../../customHooks/useAuth";
 import logo from '../../assets/images/drawing.svg'
-import { motion } from "framer-motion";
 
 const admin_nav = [
   {
@@ -29,8 +27,6 @@ const admin_nav = [
 ];
 
 const AdminNav = () => {
-  const { currentUser } = useAuth();
-
   return (
     <nav className="admin_navbar">
       <div className="admin_logo">

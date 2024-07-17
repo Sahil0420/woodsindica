@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
 import ProductList from '../../components/UI/ProductList'

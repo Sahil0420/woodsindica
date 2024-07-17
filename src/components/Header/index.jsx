@@ -3,7 +3,6 @@ import "./style.css";
 import logo from "../../assets/images/drawing.svg";
 import { Container, Row } from "reactstrap";
 import { NavLink, useNavigate } from "react-router-dom";
-import userIcon from "../../assets/images/user.svg";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import useAuth from "../../customHooks/useAuth";

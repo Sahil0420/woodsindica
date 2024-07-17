@@ -8,6 +8,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../firebase.config"; // Import db
 import { setDoc, doc } from "firebase/firestore";
 import toast from "react-hot-toast";
+import { generateJWTToken } from "../../utils/jwtUtils";
 
 const Signup = () => {
   const [view, setView] = useState("password");
@@ -57,6 +58,7 @@ const Signup = () => {
 
     setLoading(true); // Set loading to true
 
+
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         auth,
@@ -64,7 +66,11 @@ const Signup = () => {
         password
       );
       const user = userCredentials.user;
-      console.log(user);
+
+      const token = generateJWTToken(user , process.env.JWT_SECRET_KEY);
+
+      localStorage.setItem('token' , token)
+
 
       await updateProfile(user, {
         displayName: name,
