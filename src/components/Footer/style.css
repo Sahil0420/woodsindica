@@ -46,3 +46,20 @@
   font-size: 0.9rem;
   margin-top: 50px;
 }
+/* CTA Section */
+.cta_section {
+  background-color: var(--primary-color);
+  color: #fff;
+  padding: 4rem 0;
+}
+
+.cta_section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: #fff; /* Set the text color to white */
+}
+
+.cta_section p {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
