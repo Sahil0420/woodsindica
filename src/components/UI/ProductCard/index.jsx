@@ -25,31 +25,29 @@ const ProductCard = ({ item }) => {
   };
 
   return (
-    <Col lg="4" md="6" className="mb-2">
-      <div className="product_item">
-        <div className="product_img">
-          <motion.img
-            whileHover={{ scale: 0.9 }}
-            src={item.imgUrl}
-            alt={item.productName}
-          />
-        </div>
-        <div className="p-2 product_info">
-          <h3 className="product_name">
-            <Link to={`/shop/${item.id}`}> {item.productName}</Link>
-          </h3>
-          <span className="text-center">{item.category}</span>
-        </div>
-        <div className="product_card-bottom d-flex align-items-center justify-content-between">
-          <span className="price">₹ {item.price}</span>
-          <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
-            <button className="btn btn-ghost">
-              Add to <i className="ri-shopping-cart-line"></i>
-            </button>
-          </motion.span>
-        </div>
+    <div className="product_card">
+      <div className="card_product_image">
+        <motion.img
+          whileHover={{ scale: 0.9 }}
+          src={item.imgUrl}
+          alt={item.productName}
+        />
       </div>
-    </Col>
+      <div className="card_product_details">
+        <h3 className="card_product_name">
+          <Link to={`/shop/${item.id}`}> {item.productName}</Link>
+        </h3>
+        <span className="card_product_category">{item.category}</span>
+      </div>
+      <div className="card_product_cart">
+        <span className="card_product_price">₹{item.price}</span>
+        <motion.span whileTap={{ scale: 1.2 }} onClick={addToCart}>
+          <button className="card_product_button">
+            Add to <i className="ri-shopping-cart-line"></i>
+          </button>
+        </motion.span>
+      </div>
+    </div>
   );
 };
 

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
-import ProductList from '../../components/UI/ProductList'
-import useGetData from "../../customHooks/useGetData"; 
-import RangeSlider from 'react-range-slider-input';
-import 'react-range-slider-input/dist/style.css';
+import ProductList from "../../components/UI/ProductList";
+import useGetData from "../../customHooks/useGetData";
+import RangeSlider from "react-range-slider-input";
+import "react-range-slider-input/dist/style.css";
 import "./style.css";
 
 const Shop = () => {
@@ -14,7 +14,6 @@ const Shop = () => {
   const [sortOption, setSortOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [viewMode, setViewMode] = useState("grid");
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
   const { data, loading } = useGetData("products");
@@ -23,7 +22,7 @@ const Shop = () => {
     if (data) {
       setProductsData(data);
       setFilteredData(data);
-      const maxPrice = Math.max(...data.map(item => item.price));
+      const maxPrice = Math.max(...data.map((item) => item.price));
       setPriceRange([0, maxPrice]);
     }
   }, [data]);
@@ -36,12 +35,14 @@ const Shop = () => {
     let filtered = [...productsData];
 
     if (activeCategory !== "All") {
-      filtered = filtered.filter(item => item.category === activeCategory);
+      filtered = filtered.filter((item) => item.category === activeCategory);
     }
 
-    filtered = filtered.filter(item => 
-      item.productName.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      item.price >= priceRange[0] && item.price <= priceRange[1]
+    filtered = filtered.filter(
+      (item) =>
+        item.productName.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        item.price >= priceRange[0] &&
+        item.price <= priceRange[1]
     );
 
     if (sortOption === "price_asc") {
@@ -72,91 +73,113 @@ const Shop = () => {
   return (
     <Helmet title="Shop">
       <section className="shop_header">
-        <Container>
-          <h1>Our Products</h1>
-          <p>Discover quality timber, furniture, and essential oils</p>
-        </Container>
+        <h1>Our Products</h1>
+        <p>Discover quality timber, furniture, and essential oils</p>
       </section>
-      <section className="shop_content">
-        <Container fluid>
-          <Row>
-            <Col lg="9" md="8">
-              <div className="shop_products">
-                <div className="products_header">
-                  <h2>{activeCategory === "All" ? "All Products" : activeCategory}</h2>
-                  <div className="product_controls">
-                    <div className="search_box">
-                      <input
-                        type="text"
-                        placeholder="Search products..."
-                        value={searchTerm}
-                        onChange={handleSearch}
-                      />
-                      <i className="ri-search-line"></i>
-                    </div>
-                    <div className="view_toggle">
-                      <button onClick={() => setViewMode("grid")} className={viewMode === "grid" ? "active" : ""}>
-                        <i className="ri-grid-fill"></i>
-                      </button>
-                      <button onClick={() => setViewMode("list")} className={viewMode === "list" ? "active" : ""}>
-                        <i className="ri-list-check"></i>
-                      </button>
-                    </div>
-                    <button className="mobile_filter_toggle" onClick={toggleMobileFilter}>
-                      <i className="ri-filter-3-line"></i> Filters
-                    </button>
-                  </div>
-                </div>
-                {loading ? (
-                  <div className="loader">Loading products...</div>
-                ) : filteredData.length === 0 ? (
-                  <div className="no_products">No products found</div>
-                ) : (
-                  <ProductList data={filteredData} viewMode={viewMode} />
+      <section className="shop_body">
+        <div className="shop_product_area">
+          <div className="shop_md_filter">
+            <h2>
+              {activeCategory === "All" ? "All Products" : activeCategory}
+            </h2>
+          </div>
+          <div className="shop_md_filter_area">
+            <div>
+              <h4>Categories</h4>
+              <ul>
+                {["All", "Furniture", "Timber", "Essential Oils"].map(
+                  (category) => (
+                    <li
+                      key={category}
+                      onClick={() => handleCategoryChange(category)}
+                    >
+                      {category}
+                    </li>
+                  )
                 )}
+              </ul>
+            </div>
+            <div className="shop_price_slider">
+              <h4>Price Range</h4>
+              <RangeSlider
+                min={0}
+                max={Math.max(...productsData.map((item) => item.price))}
+                step={10}
+                value={priceRange}
+                onInput={setPriceRange}
+                className="price_slider"
+              />
+              <div>
+                ${priceRange[0]} - ${priceRange[1]}
               </div>
-            </Col>
-            <Col lg="3" md="4">
-              <div className={`shop_sidebar ${isMobileFilterOpen ? 'mobile_open' : ''}`}>
-                <div className="sidebar_section">
-                  <h3>Categories</h3>
-                  <ul className="category_list">
-                    {["All", "Furniture", "Timber", "Essential Oils"].map((category) => (
-                      <li 
-                        key={category} 
-                        className={activeCategory === category ? 'active' : ''}
-                        onClick={() => handleCategoryChange(category)}
-                      >
-                        {category}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="sidebar_section">
-                  <h3>Price Range</h3>
-                  <RangeSlider
-                    min={0}
-                    max={Math.max(...productsData.map(item => item.price))}
-                    step={10}
-                    value={priceRange}
-                    onInput={setPriceRange}
-                  />
-                  <div className="price_display">
-                    ${priceRange[0]} - ${priceRange[1]}
-                  </div>
-                </div>
-                <div className="sidebar_section">
-                  <h3>Sort By</h3>
-                  <select onChange={handleSortChange} value={sortOption}>
-                    <option value="">Default</option>
-                    <option value="price_asc">Price: Low to High</option>
-                    <option value="price_desc">Price: High to Low</option>
-                  </select>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+            </div>
+            <div className="shop_sort_product">
+              <h4>Sort By</h4>
+              <select onChange={handleSortChange} value={sortOption}>
+                <option value="">Default</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+              </select>
+            </div>
+          </div>
+          <div className="shop_search">
+            <input
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={handleSearch}
+            />
+            <i className="ri-search-line"></i>
+          </div>
+          <div className="shop_product_list">
+            {loading ? (
+              <div>Loading products...</div>
+            ) : filteredData.length === 0 ? (
+              <div>No products found</div>
+            ) : (
+              <ProductList data={filteredData} />
+            )}
+          </div>
+        </div>
+        <div className="shop_filter_area">
+          <div>
+            <h4>Categories</h4>
+            <ul>
+              {["All", "Furniture", "Timber", "Essential Oils"].map(
+                (category) => (
+                  <li
+                    key={category}
+                    onClick={() => handleCategoryChange(category)}
+                  >
+                    {category}
+                  </li>
+                )
+              )}
+            </ul>
+          </div>
+          <div className="shop_price_slider">
+            <h4>Price Range</h4>
+            <RangeSlider
+              min={0}
+              max={Math.max(...productsData.map((item) => item.price))}
+              step={10}
+              value={priceRange}
+              onInput={setPriceRange}
+              className="price_slider"
+            />
+            <div>
+              ${priceRange[0]} - ${priceRange[1]}
+            </div>
+          </div>
+          <div className="shop_sort_product">
+            <h4>Sort By</h4>
+            <select onChange={handleSortChange} value={sortOption}>
+              <option value="">Default</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
       </section>
     </Helmet>
   );

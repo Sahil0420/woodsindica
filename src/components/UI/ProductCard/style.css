@@ -1,130 +1,67 @@
-.product_item {
-  cursor: pointer;
+.product_card{
+  width: 100%;
+  height: 100%;
+  background: transparent;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: 15px;
-  box-sizing: border-box;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
-  background-color: #fff;
-  transition: all 0.3s ease;
-  width: 300px;
-  height: 450px; /* Adjusted height to accommodate the button */
+  gap: 1rem;
+  overflow: hidden;
+  outline: solid 1px var(--primary-color);
+  border-radius: 4px;
 }
 
-.product_item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-}
-
-.product_img {
-  height: 16rem;
+.card_product_image{
+  height:100%;
   width: 100%;
-  margin-bottom: 1rem;
+  /* padding: 0.4rem; */
+  flex:8;
+  overflow: hidden;
+  img{
+    /* border-radius:0.6rem; */
+    object-fit: cover;
+  }
 }
 
-.product_img img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.product_info {
-  width: 100%;
-  text-align: left;
-}
-
-.product_info h3 {
-  font-size: 1.2rem;
-  color: var(--primary-color);
-  font-weight: 600;
-}
-
-.product_info h3 a {
-  color: inherit;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.product_info h3 a:hover {
-  color: var(--secondary-color);
-}
-
-.product_info span {
-  font-size: 0.9rem;
-  color: var(--text-color);
-  font-weight: 400;
-}
-
-.product_card-bottom {
+.card_product_details{
+  padding: 0rem 1rem;
   display: flex;
-  width: 100%;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex: 1;
+
+}
+
+.card_product_name a{
+  font-size: 1rem;
+  text-transform: capitalize;
+}
+
+.card_product_category{
+  font-size: 1.3rem;
+  color: #555;
+}
+
+.card_product_price{
+  font-size: 1rem;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.card_product_cart{
+  height: 60px;
+  display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: auto; /* Ensures the button stays at the bottom */
+  padding: 1rem;
 }
 
-.product_card-bottom .price {
-  color: var(--primary-color);
-  font-size: 1.3rem;
-  font-weight: 600;
-}
-
-.product_card-bottom button {
-  background-color: var(--secondary-color);
-  color: #fff;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 25px;
+.card_product_button{
+  margin: 0;
+  padding: 5px 10px;
+  background: #668d50;
   font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.product_card-bottom button:hover {
-  background-color: var(--primary-color);
-}
-
-.product_card-bottom button i {
-  margin-left: 5px;
-}
-
-@media only screen and (max-width: 992px) {
-  .product_img {
-    height: 14rem;
-  }
-
-  .product_info h3 {
-    font-size: 1.1rem;
-  }
-
-  .product_card-bottom .price {
-    font-size: 1.1rem;
-  }
-
-  .product_card-bottom button {
-    font-size: 0.8rem;
-    padding: 6px 12px;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .product_img {
-    height: 12rem;
-  }
-
-  .product_info h3 {
-    font-size: 1rem;
-  }
-
-  .product_card-bottom .price {
-    font-size: 1rem;
-  }
-
-  .product_card-bottom button {
-    font-size: 0.75rem;
-    padding: 5px 10px;
-  }
+@media only screen and (max-width: 546px) {
+  
 }
