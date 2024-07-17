@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Helmet from "../../components/Helmet";
-import CommonSection from "../../components/UI/CommonSection";
-import "./style.css";
-import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { cartActions } from "../../redux/slices/cartSlice";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
-import { db } from "../../firebase.config";
 import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase.config";
+import { cartActions } from "../../redux/slices/cartSlice";
 import useGetData from "../../customHooks/useGetData";
+import Helmet from "../../components/Helmet";
+import ProductCard from "../../components/UI/ProductCard";
+import "./style.css";
+
+import defaultImage from "../../assets/images/woods-home.webp";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState(null);
-  const { id } = useParams(); // Get the product ID from the URL
+  const { id } = useParams();
   const dispatch = useDispatch();
+  const { data: products } = useGetData('products');
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const docRef = doc(db, "products", id); // Correctly create the document reference
+      const docRef = doc(db, "products", id);
       const docSnap = await getDoc(docRef);
-
       if (docSnap.exists()) {
-        setProduct({ id: docSnap.id, ...docSnap.data() }); // Ensure to store the id as well
+        setProduct({ id: docSnap.id, ...docSnap.data() });
       } else {
         console.log("No product found");
       }
     };
-
     fetchProduct();
   }, [id]);
 
@@ -44,59 +44,49 @@ const ProductDetails = () => {
     }
   };
 
-  const { data: products } = useGetData('products');
-
-  useEffect(() => {
-    console.log("Product:", product);
-    console.log("Products:", products);
-  }, [product, products]);
-
   const relatedProducts = products
     .filter(item => item.category === product?.category && item.id !== product?.id)
     .slice(0, 4);
 
   if (!product) {
-    return (
-      <Helmet title="Product Not Found">
-        <CommonSection title="Product Not Found" />
-        <section className="product-details">
-          <h2>Product Not Found</h2>
-        </section>
-      </Helmet>
-    );
+    return <div className="loading">Loading...</div>;
   }
 
-  const { imgUrl, productName, price, description } = product;
+  const { imgUrl, productName, price, description, category } = product;
 
   return (
     <Helmet title={productName}>
-      <CommonSection title={productName} />
-      <section className="product-details">
-        <div className="product-img">
-          <img src={imgUrl} alt={productName} />
+      <div className="product-details-container">
+        <div className="product-image-container">
+          <img 
+            src={imgUrl} 
+            alt={productName} 
+            onError={(e) => { 
+              e.target.onerror = null; 
+              e.target.src = defaultImage; 
+            }} 
+          />
         </div>
-        <div className="product-info">
-          <h2>{productName}</h2>
+        <div className="product-info-container">
+          <h1 className="product-name">{productName}</h1>
+          <span className="product-category">{category}</span>
           <p className="product-price">₹{price}</p>
           <p className="product-description">{description}</p>
-          <motion.button whileHover={{ scale: 1.1 }} onClick={addToCart}>
-            Add to Cart
+          <motion.button 
+            whileTap={{ scale: 0.9 }}
+            className="add-to-cart-btn" 
+            onClick={addToCart}
+          >
+            🛒 Add to Cart
           </motion.button>
         </div>
-      </section>
-      <section className="related-products">
-        <h3>Related Products</h3>
-        <div className="product-list">
-          {relatedProducts.map(item => (
-            <div key={item.id} className="product-card">
-              <div className="product-card-img">
-                <img src={item.imgUrl} alt={item.productName} />
-              </div>
-              <div className="product-card-info">
-                <Link to={`/shop/${item.id}`}>{item.productName}</Link>
-                <p>₹{item.price}</p>
-              </div>
-            </div>
+      </div>
+
+      <section className="related-products-section">
+        <h2>You might also like</h2>
+        <div className="related-products-grid">
+          {relatedProducts.map((item) => (
+            <ProductCard key={item.id} item={item} />
           ))}
         </div>
       </section>
