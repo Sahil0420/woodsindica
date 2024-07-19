@@ -1,3 +1,4 @@
+// Login.jsx
 import React, { useState } from "react";
 import "./style.css";
 import Helmet from "../../components/Helmet";
@@ -11,41 +12,29 @@ import toast from "react-hot-toast";
 const Login = () => {
   const [view, setView] = useState("password");
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const togglePassword = () => {
     setView((view) => (view === "password" ? "text" : "password"));
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false); // Add loading state
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic validation
     if (!email || !password) {
       setError("Please fill in all fields");
       return;
     }
-
-    setLoading(true); // Set loading to true
-
+    setLoading(true);
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      console.log(user);
-
-      // Successful login
       setEmail("");
       setPassword("");
       setError("");
-      setLoading(false); // Set loading to false
+      setLoading(false);
       navigate('/shop');
       toast.success(`Welcome back, ${user.displayName}`);
     } catch (error) {
@@ -57,54 +46,69 @@ const Login = () => {
       } else {
         setError("An error occurred. Please try again later.");
       }
-      setLoading(false); // Set loading to false
+      setLoading(false);
     }
   };
 
   return (
-    <Helmet title={"Login"}>
-      <div className="login_form" style={{ backgroundImage: `url(${image})` }}>
-        <form id="login-form" onSubmit={handleSubmit}>
-          <h3>Login</h3>
-          {error && <p className="error">{error}</p>}
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type={view}
-            name="password"
-            id="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <motion.span
-            className="eye_button"
-            whileHover={{ color: "red" }}
-            onClick={togglePassword}
-          >
-            {view === "password" ? (
-              <i className="ri-eye-line"></i>
-            ) : (
-              <i className="ri-eye-close-line"></i>
-            )}
-          </motion.span>
-          <button type="submit" disabled={isLoading}>
-            {isLoading ? "Logging In..." : "Login"}
-          </button>
-          <hr />
-          <div className="redirect_section">
-            <p>Don't have an account?</p>
-            <span>
-              <Link to="/signup">Sign Up</Link>
-            </span>
-          </div>
-        </form>
+    <Helmet title="Login">
+      <div className="login-container" style={{ backgroundImage: `url(${image})` }}>
+        <div className="login-form-wrapper">
+          <form id="login-form" onSubmit={handleSubmit}>
+            <h2>Welcome Back</h2>
+            <p className="login-subtitle">Please enter your details</p>
+            {error && <p className="error-message">{error}</p>}
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <div className="password-input">
+                <input
+                  type={view}
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  required
+                />
+                <motion.button
+                  type="button"
+                  className="toggle-password"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={togglePassword}
+                >
+                  {view === "password" ? (
+                    <i className="ri-eye-line"></i>
+                  ) : (
+                    <i className="ri-eye-off-line"></i>
+                  )}
+                </motion.button>
+              </div>
+            </div>
+            <motion.button
+              type="submit"
+              className="login-button"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              disabled={isLoading}
+            >
+              {isLoading ? "Logging In..." : "Log In"}
+            </motion.button>
+            <p className="signup-link">
+              Don't have an account? <Link to="/signup">Sign up</Link>
+            </p>
+          </form>
+        </div>
       </div>
     </Helmet>
   );

@@ -1,3 +1,4 @@
+// Shop.jsx
 import { useState, useEffect } from "react";
 import Helmet from "../../components/Helmet";
 import { Container, Row, Col } from "reactstrap";
@@ -6,6 +7,7 @@ import useGetData from "../../customHooks/useGetData";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import "./style.css";
+import shopHeroBg from '../../assets/images/forest1.png';
 
 const Shop = () => {
   const [productsData, setProductsData] = useState([]);
@@ -56,6 +58,7 @@ const Shop = () => {
 
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
+    setIsMobileFilterOpen(false);
   };
 
   const handleSortChange = (e) => {
@@ -72,115 +75,87 @@ const Shop = () => {
 
   return (
     <Helmet title="Shop">
-      <section className="shop_header">
-        <h1>Our Products</h1>
-        <p>Discover quality timber, furniture, and essential oils</p>
+      <section className="shop_header" style={{backgroundImage: `url(${shopHeroBg})`}}>
+        <div className="shop_header_content">
+          <h1>Our Products</h1>
+          <p>Discover quality timber, furniture, and essential oils</p>
+        </div>
       </section>
-      <section className="shop_body">
-        <div className="shop_product_area">
-          <div className="shop_md_filter">
-            <h2>
-              {activeCategory === "All" ? "All Products" : activeCategory}
-            </h2>
-          </div>
-          <div className="shop_md_filter_area">
-            <div>
-              <h4>Categories</h4>
-              <ul>
-                {["All", "Furniture", "Timber", "Essential Oils"].map(
-                  (category) => (
-                    <li
-                      key={category}
-                      onClick={() => handleCategoryChange(category)}
-                    >
-                      {category}
-                    </li>
-                  )
-                )}
-              </ul>
-            </div>
-            <div className="shop_price_slider">
-              <h4>Price Range</h4>
-              <RangeSlider
-                min={0}
-                max={Math.max(...productsData.map((item) => item.price))}
-                step={10}
-                value={priceRange}
-                onInput={setPriceRange}
-                className="price_slider"
-              />
-              <div>
-                ${priceRange[0]} - ${priceRange[1]}
+      <Container>
+        <Row>
+          <Col lg="3" md="4">
+            <div className={`shop_filter_area ${isMobileFilterOpen ? 'mobile-open' : ''}`}>
+              <div className="filter_section">
+                <h4>Categories</h4>
+                <ul>
+                  {["All", "Furniture", "Timber", "Essential Oils"].map(
+                    (category) => (
+                      <li
+                        key={category}
+                        className={activeCategory === category ? 'active' : ''}
+                        onClick={() => handleCategoryChange(category)}
+                      >
+                        {category}
+                      </li>
+                    )
+                  )}
+                </ul>
+              </div>
+              <div className="filter_section">
+                <h4>Price Range</h4>
+                <RangeSlider
+                  min={0}
+                  max={Math.max(...productsData.map((item) => item.price))}
+                  step={10}
+                  value={priceRange}
+                  onInput={setPriceRange}
+                  className="price_slider"
+                />
+                <div className="price_range_display">
+                  <span>${priceRange[0]}</span>
+                  <span>${priceRange[1]}</span>
+                </div>
+              </div>
+              <div className="filter_section">
+                <h4>Sort By</h4>
+                <select onChange={handleSortChange} value={sortOption}>
+                  <option value="">Default</option>
+                  <option value="price_asc">Price: Low to High</option>
+                  <option value="price_desc">Price: High to Low</option>
+                </select>
               </div>
             </div>
-            <div className="shop_sort_product">
-              <h4>Sort By</h4>
-              <select onChange={handleSortChange} value={sortOption}>
-                <option value="">Default</option>
-                <option value="price_asc">Price: Low to High</option>
-                <option value="price_desc">Price: High to Low</option>
-              </select>
+          </Col>
+          <Col lg="9" md="8">
+            <div className="shop_product_area">
+              <div className="shop_top_bar">
+                <h2>{activeCategory === "All" ? "All Products" : activeCategory}</h2>
+                <div className="shop_search">
+                  <input
+                    type="text"
+                    placeholder="Search products..."
+                    value={searchTerm}
+                    onChange={handleSearch}
+                  />
+                  <i className="ri-search-line"></i>
+                </div>
+                <button className="mobile_filter_toggle" onClick={toggleMobileFilter}>
+                  Filters
+                </button>
+              </div>
+              <div className="shop_product_list">
+                {loading ? (
+                  <div className="loading">Loading products...</div>
+                ) : filteredData.length === 0 ? (
+                  <div className="no_products">No products found</div>
+                ) : (
+                  <ProductList data={filteredData} />
+                )}
+              </div>
             </div>
-          </div>
-          <div className="shop_search">
-            <input
-              type="text"
-              placeholder="Search products..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-            <i className="ri-search-line"></i>
-          </div>
-          <div className="shop_product_list">
-            {loading ? (
-              <div>Loading products...</div>
-            ) : filteredData.length === 0 ? (
-              <div>No products found</div>
-            ) : (
-              <ProductList data={filteredData} />
-            )}
-          </div>
-        </div>
-        <div className="shop_filter_area">
-          <div>
-            <h4>Categories</h4>
-            <ul>
-              {["All", "Furniture", "Timber", "Essential Oils"].map(
-                (category) => (
-                  <li
-                    key={category}
-                    onClick={() => handleCategoryChange(category)}
-                  >
-                    {category}
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
-          <div className="shop_price_slider">
-            <h4>Price Range</h4>
-            <RangeSlider
-              min={0}
-              max={Math.max(...productsData.map((item) => item.price))}
-              step={10}
-              value={priceRange}
-              onInput={setPriceRange}
-              className="price_slider"
-            />
-            <div>
-              ${priceRange[0]} - ${priceRange[1]}
-            </div>
-          </div>
-          <div className="shop_sort_product">
-            <h4>Sort By</h4>
-            <select onChange={handleSortChange} value={sortOption}>
-              <option value="">Default</option>
-              <option value="price_asc">Price: Low to High</option>
-              <option value="price_desc">Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-      </section>
+          </Col>
+        </Row>
+      </Container>
     </Helmet>
   );
 };
